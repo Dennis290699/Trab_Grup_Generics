@@ -1,4 +1,4 @@
-package Diseño;
+package DiseÃ±o;
 
 public class Menus {
 
@@ -18,7 +18,7 @@ public class Menus {
 	}
 	
 	public static void esperar(){
-        System.out.println(Colors.color_wait+ "...Presione la tecla Enter para continuar...\n"+ Colors.reset);
+        System.out.println("...Presione la tecla Enter para continuar...\n");
         try{System.in.read();}
                 catch(Exception e){};
     }
