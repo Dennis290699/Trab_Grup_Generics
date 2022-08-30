@@ -14,8 +14,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Scanner;
 import java.util.stream.Collectors;
-import Diseño.Colors;
-import Diseño.Menus;
+import DiseÃ±o.Colors;
+import DiseÃ±o.Menus;
 
 public class Servidor_Principal {
 
@@ -65,8 +65,8 @@ public class Servidor_Principal {
 
 		System.out.println(" ******* GRUPO 3 ******* ");
 		System.out.println();
-		System.out.println(Colors.color_wait + "Cargando Productos......." + Colors.reset);
-		System.out.println("Productos Cargados con Exito: " + Colors.color + MyArreglo.size() + Colors.reset);
+		System.out.println("Cargando Productos.......");
+		System.out.println("Productos Cargados con Exito: " + MyArreglo.size());
 
 		Menus.choose();
 
