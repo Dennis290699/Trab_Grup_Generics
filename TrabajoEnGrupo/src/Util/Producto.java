@@ -76,4 +76,5 @@ public class Producto implements Comparable<Producto> {
 		return "Supermercados= " + Supermercados + " | Categoria= " + Categoria + " | Nombre= " + Nombre
 				+ "    | Precio= " + Precio + "   | PrecioR=  " + PrecioR;
 	}
+	
 }// FINAL CLASS

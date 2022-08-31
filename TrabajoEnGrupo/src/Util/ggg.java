@@ -16,10 +16,10 @@ import java.util.Scanner;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import Diseño.Colors;
+
 import Diseño.Menus;
 
-public class Servidor_Principal {
+public class ggg {
 
 	static Scanner obj;
 
@@ -52,13 +52,13 @@ public class Servidor_Principal {
 
 //	PARAMETROS DE CALIFICACION
 	public static void Operaciones() throws IOException {
-
+		
 		obj = new Scanner(System.in);
 		DecimalFormat df = new DecimalFormat("#.00");
 		int opcion = 0;
 
 		ArrayList<Producto> MyArreglo = LeerArrayList();
-
+		
 		Comparator<Producto> Categoria = Comparator.comparing(Producto::getCategoria);
 		Comparator<Producto> Nombre = Comparator.comparing(Producto::getNombre);
 		Comparator<Producto> Super = Comparator.comparing(Producto::getSupermercados);
@@ -67,20 +67,19 @@ public class Servidor_Principal {
 
 		System.out.println(" ******* GRUPO 3 ******* ");
 		System.out.println();
-		System.out.println(Colors.color_wait + "Cargando Productos......." + Colors.reset);
-		System.out.println(
-				"Productos Cargados con Exito: " + Colors.color + MyArreglo.size() + Colors.reset + " Existentes");
+		System.out.println("Cargando Productos.......");
+		System.out.println("Productos Cargados con Exito: " + MyArreglo.size());
 
 		Menus.choose();
 
 		while (opcion != 11) {
-
+			
 			opcion = obj.nextInt();
-
+			
 //			CANTIDAD DE REGISTROS
 //			---------------------------------------------------------------------------------------
 			double TotalProductos = MyArreglo.stream().map(a -> a.getPrecio()).count();
-
+			
 //			SUMA PRECIO
 //			---------------------------------------------------------------------------------------
 			double precioTotal = MyArreglo.stream().mapToDouble(a -> a.getPrecio()).sum();
@@ -98,14 +97,14 @@ public class Servidor_Principal {
 			Optional<Producto> StringProducto = MyArreglo.stream()
 					.filter(x -> x.getSupermercados().equals("carrefour-es")).sorted(Categoria.reversed()).findFirst();
 
-			Consumer<String> printUpperCase = str -> System.out.println(str.toUpperCase());
-
-			Function<String, Integer> strLength = str -> str.length();
+		    Consumer<String> printUpperCase = str -> System.out.println(str.toUpperCase());
+		    
+		    Function<String,Integer> strLength = str -> str.length();
 
 //			OPERACIONES
 //			---------------------------------------------------------------------------------------
 			switch (opcion) {
-
+			
 			case 1:
 				System.out.println("\n" + "-------INSERTAR PRODUCTO--------");
 				System.out.println("Ingrese nombre del supermercado: ");
@@ -123,28 +122,29 @@ public class Servidor_Principal {
 				Producto Prod = new Producto(S, C, N, P, PR, U);
 				MyArreglo.add(Prod);
 				System.out.println("Productos: " + MyArreglo.size());
-
+				
 				Menus.repeat();
 				break;
 
 			case 2:
 				System.out.println("\n" + "-------OPERACIONES FINALES--------");
 //				LONGITUD DE STRING
-				System.out.print("\nLongitud de: Productos cargados con Exito ---> ");
-				System.out.println(Colors.color + strLength.apply("Productos cargados con Exito") + Colors.reset);
-
+				System.out.print("\nLongitud de: Productos cargados con Exito");
+                System.out.print("--->");
+                System.out.print(strLength.apply("Productos cargados con Exito"));
+				
 //				CANTIDAD DE REGISTROS
 //				-------------------------------------------------------------------------------
-				System.out.println("Total de productos: " + Colors.color + df.format(TotalProductos) + Colors.reset);
+				System.out.println("Total de productos: " + df.format(TotalProductos));
 
 //				SUMA PRECIO
 //				---------------------------------------------------------------------------------------
-				System.out.println("Suma precio: " + Colors.color + df.format(precioTotal) + Colors.reset);
-
+				System.out.println("Suma precio: " + df.format(precioTotal));
+				
 //				PROMEDIO
 //				---------------------------------------------------------------------------------------
 				double promedio = MyArreglo.stream().collect(Collectors.averagingDouble(a -> a.getPrecio()));
-				System.out.println("Promedio: " + Colors.color + df.format(promedio) + Colors.reset);
+				System.out.println("Promedio: " + df.format(promedio));
 
 //				PRECIO MINIMO
 //				---------------------------------------------------------------------------------------
@@ -152,34 +152,24 @@ public class Servidor_Principal {
 				Optional<Producto> minimo = MyArreglo.stream().min(Precio);
 				if (minimo.isPresent()) {
 					Producto Min = minimo.get();
-					System.out.println("El producto con menor valor es: " + Colors.cyan + Min.getNombre() + Colors.reset
-							+ " con un valor de: " + Colors.color + Min.getPrecio() + Colors.reset);
+					System.out.println("El producto con menor valor es: " + Min.getNombre() + " con un valor de: " + Min.getPrecio());
 
 //				PRECIO MAXIMO
 //				----------------------------------------------------------------------------------------
-					System.out.println("Maximo");
-					Optional<Producto> maximo = MyArreglo.stream().max(Precio);
-					if (maximo.isPresent()) {
-						Producto max = maximo.get();
-						System.out.println("El producto con mayor valor es: " + Colors.cyan + max.getNombre()
-								+ Colors.reset + " con un valor de: " + Colors.color + max.getPrecio() + Colors.reset);
+				System.out.println("Maximo");
+				Optional<Producto> maximo = MyArreglo.stream().max(Precio);
+				if (maximo.isPresent()) {
+					Producto max = maximo.get();
+					System.out.println("El producto con mayor valor es: " + max.getNombre() + " con un valor de: " + max.getPrecio());
 					} else
-						System.out.println(Colors.color_error + "Registro no encontrado!! " + Colors.reset);
+						System.out.println("no existe ");
 				}
 
-				System.out.println(Colors.purple
-						+ "----------------------------------------------------------------------------------------------"
-						+ Colors.reset);
-				DoubleSummaryStatistics datosTotal = MyArreglo.stream()
-						.collect(Collectors.summarizingDouble(Producto::getPrecio));
+				System.out.println("---------------------------------------------------------------------------------");
+				DoubleSummaryStatistics datosTotal = MyArreglo.stream().collect(Collectors.summarizingDouble(Producto::getPrecio));
 				System.out.println("Datos: " + datosTotal);
-
-				System.out.println(Colors.purple
-						+ "----------------------------------------------------------------------------------------------"
-						+ Colors.reset);
-
-				printUpperCase.accept("Datos Consumer:" + datosTotal);
-
+				System.out.println("---------------------------------------------------------------------------------");
+				printUpperCase.accept("Datos Consumer:"+ datosTotal);
 				Menus.repeat();
 				break;
 
@@ -228,18 +218,10 @@ public class Servidor_Principal {
 						.map(x -> x.getSupermercados() + "  " + x.getNombre() + " - $" + x.getPrecio()).limit(500)
 						.forEach(System.out::println);
 
-				System.out.println(Colors.purple
-						+ "----------------------------------------------------------------------------------------------"
-						+ Colors.reset);
-
 				System.out.println("\nOrdenamiento categoria y supermercados");
 				MyArreglo.stream().sorted(Super.thenComparing(Categoria))
 						.map(x -> x.getCategoria() + " - " + x.getSupermercados()).limit(500)
 						.forEach(System.out::println);
-
-				System.out.println(Colors.purple
-						+ "----------------------------------------------------------------------------------------------"
-						+ Colors.reset);
 
 				System.out.println("\nOrdenamiento por Nombres de supermercados");
 				Collection<String> nom = MyArreglo.stream().map(x -> x.getSupermercados())
@@ -252,10 +234,6 @@ public class Servidor_Principal {
 					}
 				}).forEach(System.out::println);
 
-				System.out.println(Colors.purple
-						+ "----------------------------------------------------------------------------------------------"
-						+ Colors.reset);
-
 				System.out.println("\nProducto con el precio Mayor ");
 				Optional<Producto> costo = MyArreglo.stream().max(Precio);
 
@@ -264,11 +242,6 @@ public class Servidor_Principal {
 					System.out.println("Supermercado: " + p0.getSupermercados() + " Nombre producto: " + p0.getNombre()
 							+ " Precio: " + p0.getPrecio());
 				}
-
-				System.out.println(Colors.purple
-						+ "----------------------------------------------------------------------------------------------"
-						+ Colors.reset);
-
 				System.out.println("\nProducto con el precio Menor ");
 				Optional<Producto> costo1 = MyArreglo.stream().min(Precio);
 
@@ -276,7 +249,6 @@ public class Servidor_Principal {
 					Producto p0 = costo1.get();
 					System.out.println("Supermercado: " + p0.getSupermercados() + " Nombre producto: " + p0.getNombre()
 							+ " Precio: " + p0.getPrecio());
-					System.out.println();
 				}
 
 				Menus.repeat();
@@ -289,45 +261,24 @@ public class Servidor_Principal {
 						.map(x -> "Nombre: " + x.getNombre() + " -------> Precio " + x.getPrecio()).limit(20)
 						.forEach(System.out::println);
 
-				System.out.println(Colors.purple
-						+ "----------------------------------------------------------------------------------------------"
-						+ Colors.reset);
-
 				System.out.println("\n  Los productos ECONOMICOS!! $.$: ");
 				MyArreglo.stream().filter(a -> a.getPrecio() <= 1).sorted(Nombre)
 						.map(x -> "Nombre: " + x.getNombre() + "  -------> Precio  " + x.getPrecio()).limit(20)
 						.forEach(System.out::println);
 
-				System.out.println(Colors.purple
-						+ "----------------------------------------------------------------------------------------------"
-						+ Colors.reset);
-
 				System.out.println("\n Cuantos productos hay en el Super  'Mercadona-es' con valor mayor a 30$ ");
 				MyArreglo.stream().filter(n -> n.Supermercados.compareTo("mercadona-es") == 0 && n.getPrecio() > 30)
 						.forEach(System.out::println);
-
-				System.out.println(Colors.purple
-						+ "----------------------------------------------------------------------------------------------"
-						+ Colors.reset);
 
 				System.out.println("\nEliminar los 2489 primeros productos");
 				MyArreglo.stream().sorted(Nombre).skip(2489)
 						.map(x -> "Nombre: " + x.getNombre() + "  -------> Precio  " + x.getPrecio())
 						.forEach(System.out::println);
 
-				System.out.println(Colors.purple
-						+ "----------------------------------------------------------------------------------------------"
-						+ Colors.reset);
-
-				System.out.println("\nMariscos en 'Mercadona-es' ");
-				MyArreglo.stream()
-						.filter(n -> n.Categoria.compareTo("marisco y pescado pescado congelado") == 0 && n.Precio > 5)
+				System.out.println("\nBebidas en 'Mercadona-es' ");
+				MyArreglo.stream().filter(n -> n.Categoria.compareTo("bebidas") == 0 && n.Precio > 5)
 						.map(x -> "Nombre: " + x.getCategoria() + "  -------> Precio  " + x.getPrecio())
 						.forEach(System.out::println);
-
-				System.out.println(Colors.purple
-						+ "----------------------------------------------------------------------------------------------"
-						+ Colors.reset);
 
 				Menus.repeat();
 				break;
@@ -335,60 +286,57 @@ public class Servidor_Principal {
 			case 6:
 				System.out.println("\n" + "-------OPERACION DE REDUCCION--------");
 				Optional<Double> sum = MyArreglo.stream().map(Producto::getPrecio).reduce(Double::sum);
-				System.out.println("La suma total de los Precios usando el metodo Reduce es: " + Colors.color
-						+ df.format(sum.get()) + Colors.reset);
+				System.out.println("La suma total de los Precios usando el metodo Reduce es: " + df.format(sum.get()));
 
 				Optional<Double> sum1 = MyArreglo.stream().map(Producto::getPrecioR).reduce(Double::sum);
 
 				System.out.println("La suma total de los Precios de Referencia usando el metodo Reduce es: "
-						+ Colors.color + df.format(sum1.get()) + Colors.reset);
+						+ df.format(sum1.get()));
 
 				Optional<Double> max = MyArreglo.stream().map(Producto::getPrecio).reduce(Double::max);
-				System.out.println("El maximo de los Precios usando el metodo Reduce es: " + Colors.color
-						+ df.format(max.get()) + Colors.reset);
+				System.out.println("El maximo de los Precios usando el metodo Reduce es: " + df.format(max.get()));
 
 				Optional<Double> min = MyArreglo.stream().map(Producto::getPrecio).reduce(Double::min);
-				System.out.println("El minimo de los Precios usando el metodo Reduce es: " + Colors.color
-						+ df.format(min.get()) + Colors.reset);
+				System.out.println("El minimo de los Precios usando el metodo Reduce es: " + df.format(min.get()));
 
 				Optional<Double> max1 = MyArreglo.stream().map(Producto::getPrecioR).reduce(Double::max);
-				System.out.println("El maximo de los Precios de Referencia usando el metodo Reduce es: " + Colors.color
-						+ df.format(max1.get()) + Colors.reset);
+				System.out.println(
+						"El maximo de los Precios de Referencia usando el metodo Reduce es: " + df.format(max1.get()));
 
 				Optional<Double> min1 = MyArreglo.stream().map(Producto::getPrecioR).reduce(Double::min);
-				System.out.println("El minimo de los Precios de Referencia usando el metodo Reduce es: " + Colors.color
-						+ df.format(min1.get()) + Colors.reset);
+				System.out.println(
+						"El minimo de los Precios de Referencia usando el metodo Reduce es: " + df.format(min1.get()));
 
 				Menus.repeat();
 				break;
 
 			case 7:
 				System.out.println("\n" + "-------OPERACION DE AGRUPAMIENTO--------");
-
+				
 				System.out.println("Agrupar  supermercado ");
 				Map<String, Long> agrupar = MyArreglo.stream()
 						.collect(Collectors.groupingBy(Producto::getSupermercados, Collectors.counting()));
 				System.out.println(agrupar);
 				System.out.println();
-
+				
 				System.out.println("Agrupar  precio de referencia de cada supermercado ");
-				Map<String, Double> agrupar2 = MyArreglo.stream().collect(Collectors
-						.groupingBy(Producto::getSupermercados, Collectors.summingDouble(Producto::getPrecioR)));
+				Map<String, Double> agrupar2 = MyArreglo.stream()
+						.collect(Collectors.groupingBy(Producto::getSupermercados, Collectors.summingDouble(Producto::getPrecioR)));
 				System.out.println(agrupar2);
 				System.out.println();
-
+				
 				System.out.println("Agrupar Unidad de Referencia ");
 				Map<String, Long> agrupar3 = MyArreglo.stream()
 						.collect(Collectors.groupingBy(Producto::getUnidadR, Collectors.counting()));
 				System.out.println(agrupar3);
 				System.out.println();
-
+				
 				System.out.println("Agrupar Precio Referencia ");
 				Map<Double, Long> agrupar4 = MyArreglo.stream()
 						.collect(Collectors.groupingBy(Producto::getPrecioR, Collectors.counting()));
 				System.out.println(agrupar4);
 				System.out.println();
-
+				
 				System.out.println("Agrupar por Precio ");
 				Map<Double, Long> agrupar5 = MyArreglo.stream()
 						.collect(Collectors.groupingBy(Producto::getPrecio, Collectors.counting()));
@@ -401,23 +349,21 @@ public class Servidor_Principal {
 				System.out.println("\n" + "-------OPERACION DE PARTICIONAMIENTO--------");
 				Map<Boolean, Optional<Producto>> PartProducto = MyArreglo.stream()
 						.collect(Collectors.partitioningBy(x -> x.Precio > 10, Collectors.maxBy(Precio)));
-
+				
 				Map<Boolean, Optional<Producto>> PartProducto1 = MyArreglo.stream()
 						.collect(Collectors.partitioningBy(x -> x.PrecioR > 10, Collectors.maxBy(PrecioR)));
-
+				
 				Map<Boolean, List<Producto>> PartProducto2 = MyArreglo.stream().collect(
 						Collectors.partitioningBy(x -> x.Categoria.compareTo("bodega licores") == 0 && x.Precio < 50));
-
+				
 				Map<Boolean, List<Producto>> PartProducto3 = MyArreglo.stream().collect(Collectors
 						.partitioningBy(x -> x.Nombre.compareTo("Ginebra 15 botanicals Blumara") == 0 && x.Precio > 5));
-
+				
 				Map<Boolean, List<Producto>> PartProducto4 = MyArreglo.stream().collect(Collectors
 						.partitioningBy(x -> x.Supermercados.compareTo("mercadona-es") == 0 && x.Precio > 600));
 
-				System.out.println(Colors.purple
-						+ "-------------------------------------------------------------------------------------------------------------------------------------------"
-						+ Colors.reset);
-
+				System.out.println(
+						"------------------------------------------------------------------------------------------------------------------");
 				if (PartProducto.get(true).isPresent()) {
 					Producto Mayorprecio = PartProducto.get(true).get();
 					System.out.println("Los productos que si cumplen: " + Mayorprecio);
@@ -427,11 +373,8 @@ public class Servidor_Principal {
 					Producto Menorprecio = PartProducto.get(false).get();
 					System.out.println("Los productos que no cumplen: " + Menorprecio);
 				}
-
-				System.out.println(Colors.purple
-						+ "-------------------------------------------------------------------------------------------------------------------------------------------"
-						+ Colors.reset);
-
+				System.out.println(
+						"------------------------------------------------------------------------------------------------------------------");
 				if (PartProducto1.get(true).isPresent()) {
 					Producto MayorPrecioR = PartProducto1.get(true).get();
 					System.out.println("Los productos que si cumplen: " + MayorPrecioR);
@@ -441,25 +384,16 @@ public class Servidor_Principal {
 					Producto MenorPrecioR = PartProducto1.get(false).get();
 					System.out.println("Los productos que no cumplen:" + MenorPrecioR);
 				}
-
-				System.out.println(Colors.purple
-						+ "-------------------------------------------------------------------------------------------------------------------------------------------"
-						+ Colors.reset);
-
+				System.out.println(
+						"----------------------------------------------------------------------------------------------------------------------------------------");
 				System.out.println("Los productos que si cumplen: ");
 				PartProducto2.get(true).forEach(System.out::println);
-
-				System.out.println(Colors.purple
-						+ "-------------------------------------------------------------------------------------------------------------------------------------------"
-						+ Colors.reset);
-
+				System.out.println(
+						"------------------------------------------------------------------------------------------------------------------------------");
 				System.out.println("Los productos que si cumplen: ");
 				PartProducto3.get(true).forEach(System.out::println);
-
-				System.out.println(Colors.purple
-						+ "-------------------------------------------------------------------------------------------------------------------------------------------"
-						+ Colors.reset);
-
+				System.out.println(
+						"----------------------------------------------------------------------------------------------------------------------------");
 				System.out.println("Los productos que si cumplen: ");
 				PartProducto4.get(true).forEach(System.out::println);
 
@@ -483,41 +417,21 @@ public class Servidor_Principal {
 				Optional<Producto> maximo = MyArreglo.stream().collect(Collectors.maxBy(Precio));
 				System.out.println(maximo);
 
-				System.out.println(Colors.purple
-						+ "-------------------------------------------------------------------------------------------------------------------------------------------"
-						+ Colors.reset);
-
 				System.out.println("MAXIMO DE PRECIO REFERENCIA");
 				Optional<Producto> maximoR = MyArreglo.stream().collect(Collectors.maxBy(PrecioR));
 				System.out.println(maximoR);
-
-				System.out.println(Colors.purple
-						+ "-------------------------------------------------------------------------------------------------------------------------------------------"
-						+ Colors.reset);
 
 				System.out.println("MINIMO DE PRECIO");
 				Optional<Producto> minCollectors = MyArreglo.stream().collect(Collectors.minBy(Precio));
 				System.out.println(minCollectors);
 
-				System.out.println(Colors.purple
-						+ "-------------------------------------------------------------------------------------------------------------------------------------------"
-						+ Colors.reset);
-
 				System.out.println("MINIMO DE PRECIO REFERENCIA");
 				Optional<Producto> minRCollectors = MyArreglo.stream().collect(Collectors.minBy(PrecioR));
 				System.out.println(minRCollectors);
 
-				System.out.println(Colors.purple
-						+ "-------------------------------------------------------------------------------------------------------------------------------------------"
-						+ Colors.reset);
-
 				System.out.println("SUMA DE PRECIOS");
 				double sumatotal = MyArreglo.stream().collect(Collectors.summingDouble(Producto::getPrecio));
 				System.out.println(sumatotal);
-
-				System.out.println(Colors.purple
-						+ "-------------------------------------------------------------------------------------------------------------------------------------------"
-						+ Colors.reset);
 
 				System.out.println("SUMA DE PRECIOS REFERENCIA");
 				double sumatotalR = MyArreglo.stream().collect(Collectors.summingDouble(Producto::getPrecioR));
@@ -527,10 +441,10 @@ public class Servidor_Principal {
 				break;
 
 			case 11:
-				System.out.println(Colors.color_wait + "........ TENGA UN BUEN DIA :)");
+				System.out.println("TENGA UN BUEN DIA :)");
 				break;
 			}
 		}
 	}
-
+	
 }// FINAL CLASS
